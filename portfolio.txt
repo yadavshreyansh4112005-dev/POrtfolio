@@ -1,0 +1,800 @@
+<!docotype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shreyansh Yadav | Portfolio</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+  html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
+  * { box-sizing: border-box; }
+
+  :root {
+    --bg-color: #0a0a1a;
+    --surface-color: rgba(15, 15, 40, 0.6);
+    --text-color: #e0e6ff;
+    --primary-color: #00d4ff;
+    --secondary-color: #a855f7;
+  }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  .font-orbitron { font-family: 'Orbitron', monospace; }
+
+  /* Custom cursor */
+  .custom-cursor {
+    width: 20px; height: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    mix-blend-mode: difference;
+    background: rgba(0, 212, 255, 0.1);
+  }
+  .custom-cursor.hover { transform: scale(2); background: rgba(0, 212, 255, 0.2); }
+
+  /* Neon glow */
+  .neon-text { text-shadow: 0 0 10px var(--primary-color), 0 0 30px var(--primary-color), 0 0 60px rgba(0, 212, 255, 0.3); }
+  .neon-purple { text-shadow: 0 0 10px var(--secondary-color), 0 0 30px var(--secondary-color); }
+  .neon-border { box-shadow: 0 0 15px rgba(0, 212, 255, 0.3), inset 0 0 15px rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); }
+  .neon-border-purple { box-shadow: 0 0 15px rgba(168, 85, 247, 0.3), inset 0 0 15px rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); }
+
+  /* Glass cards */
+  .glass-card {
+    background: var(--surface-color);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-card:hover {
+    transform: translateY(-8px) rotateX(2deg);
+    box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2), 0 0 30px rgba(168, 85, 247, 0.15);
+    border-color: rgba(0, 212, 255, 0.4);
+  }
+
+  /* Grid background */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Floating animation */
+  @keyframes float { 0%, 100% { transform: translateY(0px) rotateY(0deg); } 50% { transform: translateY(-20px) rotateY(5deg); } }
+  @keyframes floatSlow { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+  @keyframes pulse-glow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+  @keyframes typewriter { from { width: 0; } to { width: 100%; } }
+  @keyframes blink { 0%, 100% { border-color: var(--primary-color); } 50% { border-color: transparent; } }
+  @keyframes rotate3d { 0% { transform: rotateY(0deg) rotateX(10deg); } 100% { transform: rotateY(360deg) rotateX(10deg); } }
+  @keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes orbit { 0% { transform: rotate(0deg) translateX(120px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); } }
+
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-float-slow { animation: floatSlow 4s ease-in-out infinite; }
+  .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+  .animate-slide-up { animation: slideUp 0.8s ease forwards; }
+
+  /* Skill bar */
+  .skill-bar-track { background: rgba(0, 212, 255, 0.1); border-radius: 999px; height: 8px; overflow: hidden; }
+  .skill-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0; }
+  .skill-bar-fill.animated { width: var(--target-width); }
+
+  /* Circular progress */
+  .circular-progress { position: relative; width: 80px; height: 80px; }
+  .circular-progress svg { transform: rotate(-90deg); }
+  .circular-progress circle { fill: none; stroke-width: 4; }
+  .circular-progress .bg-ring { stroke: rgba(0, 212, 255, 0.15); }
+  .circular-progress .progress-ring {
+    stroke: url(#neonGrad);
+    stroke-dasharray: 226;
+    stroke-dashoffset: 226;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0a0a1a; }
+  ::-webkit-scrollbar-thumb { background: linear-gradient(var(--primary-color), var(--secondary-color)); border-radius: 3px; }
+
+  /* Nav */
+  .nav-link { position: relative; padding: 4px 0; }
+  .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--primary-color); transition: width 0.3s; }
+  .nav-link:hover::after { width: 100%; }
+
+  /* Button glow */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 12px 32px; border-radius: 12px; font-weight: 700; letter-spacing: 1px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .btn-primary:hover { box-shadow: 0 0 30px rgba(0, 212, 255, 0.5), 0 0 60px rgba(168, 85, 247, 0.3); transform: translateY(-2px); }
+  .btn-outline {
+    border: 2px solid var(--primary-color); padding: 12px 32px; border-radius: 12px;
+    font-weight: 700; letter-spacing: 1px; transition: all 0.3s; color: var(--primary-color);
+  }
+  .btn-outline:hover { background: rgba(0, 212, 255, 0.1); box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+
+  /* Code animation in laptop */
+  .code-line { opacity: 0; animation: fadeIn 0.5s ease forwards; white-space: nowrap; font-size: 9px; line-height: 1.4; }
+
+  /* 3D Laptop */
+  .laptop-container { perspective: 1000px; }
+  .laptop-body { transform: rotateX(5deg) rotateY(-10deg); transition: transform 0.3s; }
+  .laptop-body:hover { transform: rotateX(2deg) rotateY(-5deg); }
+
+  /* Particles */
+  .particle {
+    position: absolute; width: 3px; height: 3px; border-radius: 50%;
+    background: var(--primary-color); opacity: 0.4;
+    animation: floatSlow 3s ease-in-out infinite;
+  }
+
+  /* Section reveal */
+  .reveal-section { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+  .reveal-section.visible { opacity: 1; transform: translateY(0); }
+
+  /* Robot SVG glow */
+  .robot-glow { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.4)); }
+
+  /* Chatbot */
+  .chatbot-container {
+    position: fixed; bottom: 20px; right: 20px; z-index: 9998;
+  }
+  .chatbot-btn {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+    transition: all 0.3s; border: none; color: #0a0a1a;
+  }
+  .chatbot-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+  .chatbot-panel {
+    position: absolute; bottom: 70px; right: 0; width: 320px;
+    background: rgba(10, 10, 30, 0.95); backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 16px;
+    overflow: hidden; transform: scale(0) translateY(20px);
+    transform-origin: bottom right; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0; pointer-events: none;
+  }
+  .chatbot-panel.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+  .chat-messages { height: 280px; overflow-y: auto; padding: 16px; }
+  .chat-msg { margin-bottom: 12px; max-width: 85%; }
+  .chat-msg.bot { margin-right: auto; }
+  .chat-msg.user { margin-left: auto; }
+  .chat-bubble {
+    padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.4;
+  }
+  .chat-bubble.bot-bubble { background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); }
+  .chat-bubble.user-bubble { background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(168, 85, 247, 0.3)); }
+
+  /* Floating 3D icons */
+  .float-icon {
+    position: absolute; padding: 10px; border-radius: 12px;
+    background: rgba(15, 15, 40, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+  }
+
+  /* Mobile nav */
+  .mobile-menu {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10, 10, 26, 0.98); backdrop-filter: blur(20px);
+    z-index: 9990; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+
+  /* Project card 3D */
+  .project-card { transform-style: preserve-3d; perspective: 1000px; }
+  .project-card-inner { transition: transform 0.6s; transform-style: preserve-3d; }
+
+  /* Contact form inputs */
+  .form-input {
+    background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 10px; padding: 12px 16px; color: var(--text-color);
+    transition: all 0.3s; width: 100%; font-family: 'Rajdhani', sans-serif; font-size: 16px;
+  }
+  .form-input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
+  .form-input::placeholder { color: rgba(224, 230, 255, 0.3); }
+
+  /* Section divider */
+  .section-divider {
+    height: 1px; background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), rgba(168, 85, 247, 0.3), transparent);
+    margin: 0 auto; max-width: 600px;
+  }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full"><!-- Custom Cursor -->
+  <div class="custom-cursor" id="cursor" style="display:none;"></div><!-- SVG Defs -->
+  <svg style="position:absolute;width:0;height:0;"><defs>
+    <lineargradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+     <stop offset="0%" style="stop-color:#00d4ff" />
+     <stop offset="100%" style="stop-color:#a855f7" />
+    </lineargradient>
+   </defs>
+  </svg><!-- Main wrapper -->
+  <div id="app-wrapper" class="w-full h-full overflow-auto grid-bg" style="position:relative;"><!-- Particles -->
+   <div id="particles" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></div><!-- Navigation -->
+   <nav id="mainNav" style="position:fixed;top:0;left:0;width:100%;z-index:9995;transition:all 0.3s;padding:16px 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;"><a href="#hero" class="font-orbitron" style="font-size:20px;font-weight:800;text-decoration:none;"> <span style="color:var(--primary-color);">S</span><span style="color:var(--text-color);">Y</span><span style="color:var(--secondary-color);">.</span> </a>
+     <div class="hidden md:flex" style="gap:32px;align-items:center;"><a href="#about" class="nav-link" style="color:var(--text-color);text-decoration:none;font-weight:500;font-size:15px;">About</a> <a href="#skills" class="nav-link" style="color:var(--text-color);text-decoration:none;font-weight:500;font-size:15px;">Skills</a> <a href="#projects" class="nav-link" style="color:var(--text-color);text-decoration:none;font-weight:500;font-size:15px;">Projects</a> <a href="#ai" class="nav-link" style="color:var(--text-color);text-decoration:none;font-weight:500;font-size:15px;">AI</a> <a href="#contact" class="nav-link" style="color:var(--text-color);text-decoration:none;font-weight:500;font-size:15px;">Contact</a>
+     </div><button id="menuBtn" class="md:hidden" style="background:none;border:none;color:var(--text-color);cursor:pointer;"><i data-lucide="menu" style="width:28px;height:28px;"></i></button>
+    </div>
+   </nav><!-- Mobile Menu -->
+   <div class="mobile-menu" id="mobileMenu"><button id="closeMenuBtn" style="position:absolute;top:20px;right:24px;background:none;border:none;color:var(--text-color);cursor:pointer;"><i data-lucide="x" style="width:32px;height:32px;"></i></button>
+    <div style="display:flex;flex-direction:column;gap:32px;text-align:center;"><a href="#about" class="mobile-nav-link font-orbitron" style="color:var(--text-color);text-decoration:none;font-size:24px;font-weight:600;">About</a> <a href="#skills" class="mobile-nav-link font-orbitron" style="color:var(--text-color);text-decoration:none;font-size:24px;font-weight:600;">Skills</a> <a href="#projects" class="mobile-nav-link font-orbitron" style="color:var(--text-color);text-decoration:none;font-size:24px;font-weight:600;">Projects</a> <a href="#ai" class="mobile-nav-link font-orbitron" style="color:var(--text-color);text-decoration:none;font-size:24px;font-weight:600;">AI</a> <a href="#contact" class="mobile-nav-link font-orbitron" style="color:var(--text-color);text-decoration:none;font-size:24px;font-weight:600;">Contact</a>
+    </div>
+   </div><!-- ==================== HERO SECTION ==================== -->
+   <header id="hero" style="min-height:100%;display:flex;align-items:center;position:relative;padding:120px 24px 80px;">
+    <div style="max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;flex-wrap:wrap;gap:48px;"><!-- Left content -->
+     <div style="flex:1;min-width:300px;">
+      <p class="font-orbitron" style="color:var(--primary-color);font-size:14px;letter-spacing:4px;margin-bottom:16px;animation:fadeIn 1s ease forwards;">◆ WELCOME TO MY PORTFOLIO</p>
+      <h1 id="heroTitle" class="font-orbitron neon-text" style="font-size:clamp(28px,5vw,56px);font-weight:900;line-height:1.1;margin-bottom:24px;animation:slideUp 0.8s ease forwards;">Hi, I'm Shreyansh<br><span style="color:var(--secondary-color);">IT Student</span> &amp;<br><span style="color:var(--primary-color);">Web Developer</span></h1>
+      <p id="heroSubtitle" style="font-size:18px;color:rgba(224,230,255,0.7);max-width:500px;margin-bottom:40px;line-height:1.6;animation:slideUp 0.8s 0.2s ease both;">I build modern websites using AI and advanced web technologies. Turning creative ideas into interactive digital experiences.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;animation:slideUp 0.8s 0.4s ease both;"><a href="#projects" class="btn-primary font-orbitron" style="color:#0a0a1a;text-decoration:none;font-size:13px;">VIEW PROJECTS</a> <a href="#contact" class="btn-outline font-orbitron" style="text-decoration:none;font-size:13px;">CONTACT ME</a>
+      </div>
+     </div><!-- Right: 3D Laptop -->
+     <div style="flex:1;min-width:300px;display:flex;justify-content:center;align-items:center;">
+      <div class="laptop-container animate-float" style="position:relative;"><!-- Robot SVG -->
+       <div class="robot-glow" style="position:absolute;top:-60px;right:-30px;z-index:2;">
+        <svg width="80" height="80" viewbox="0 0 100 100"><rect x="30" y="35" width="40" height="45" rx="8" fill="rgba(10,10,30,0.8)" stroke="#00d4ff" stroke-width="2" /> <rect x="35" y="20" width="30" height="20" rx="6" fill="rgba(10,10,30,0.8)" stroke="#a855f7" stroke-width="2" /> <circle cx="43" cy="30" r="3" fill="#00d4ff">
+          <animate attributename="opacity" values="1;0.3;1" dur="2s" repeatcount="indefinite" />
+         </circle> <circle cx="57" cy="30" r="3" fill="#00d4ff">
+          <animate attributename="opacity" values="1;0.3;1" dur="2s" begin="0.5s" repeatcount="indefinite" />
+         </circle> <line x1="45" y1="36" x2="55" y2="36" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" /> <rect x="20" y="45" width="12" height="6" rx="3" fill="rgba(10,10,30,0.8)" stroke="#00d4ff" stroke-width="1.5" /> <rect x="68" y="45" width="12" height="6" rx="3" fill="rgba(10,10,30,0.8)" stroke="#00d4ff" stroke-width="1.5" /> <rect x="38" y="80" width="8" height="12" rx="3" fill="rgba(10,10,30,0.8)" stroke="#a855f7" stroke-width="1.5" /> <rect x="54" y="80" width="8" height="12" rx="3" fill="rgba(10,10,30,0.8)" stroke="#a855f7" stroke-width="1.5" /> <line x1="50" y1="15" x2="50" y2="8" stroke="#00d4ff" stroke-width="2" /> <circle cx="50" cy="6" r="3" fill="#a855f7">
+          <animate attributename="r" values="3;4;3" dur="1.5s" repeatcount="indefinite" />
+         </circle>
+        </svg>
+       </div><!-- Laptop -->
+       <div class="laptop-body" style="width:340px;"><!-- Screen -->
+        <div style="background:rgba(10,10,30,0.9);border:2px solid rgba(0,212,255,0.4);border-radius:12px 12px 0 0;padding:8px;position:relative;overflow:hidden;"><!-- Scanline -->
+         <div style="position:absolute;top:-10%;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),transparent);animation:scanline 4s linear infinite;z-index:1;"></div><!-- Window bar -->
+         <div style="display:flex;gap:5px;margin-bottom:6px;padding:4px 6px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#ff5f57;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#febc2e;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#28c840;"></div><span style="margin-left:auto;font-size:9px;color:rgba(0,212,255,0.5);font-family:'Orbitron',monospace;">index.html</span>
+         </div><!-- Code display -->
+         <div id="codeDisplay" style="font-family:monospace;padding:8px;height:180px;overflow:hidden;font-size:10px;line-height:1.5;"></div>
+        </div><!-- Laptop base -->
+        <div style="height:12px;background:linear-gradient(180deg,rgba(0,212,255,0.2),rgba(10,10,30,0.8));border-radius:0 0 4px 4px;border:1px solid rgba(0,212,255,0.2);border-top:none;"></div>
+        <div style="width:110%;margin-left:-5%;height:8px;background:linear-gradient(180deg,rgba(0,212,255,0.15),transparent);border-radius:0 0 50% 50%;"></div>
+       </div><!-- Floating icons -->
+       <div class="float-icon animate-float-slow" style="top:-20px;left:-50px;animation-delay:0s;">
+        <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
+         <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
+        </svg>
+       </div>
+       <div class="float-icon animate-float-slow" style="bottom:20px;right:-50px;animation-delay:1s;">
+        <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
+         <path d="M16 18l6-6-6-6" /><path d="M8 6l-6 6 6 6" />
+        </svg>
+       </div>
+       <div class="float-icon animate-float-slow" style="bottom:-20px;left:20px;animation-delay:2s;">
+        <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
+         <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
+        </svg>
+       </div>
+      </div>
+     </div>
+    </div><!-- Scroll indicator -->
+    <div style="position:absolute;bottom:30px;left:50%;transform:translateX(-50%);text-align:center;animation:floatSlow 2s ease-in-out infinite;"><i data-lucide="chevron-down" style="width:24px;height:24px;color:var(--primary-color);"></i>
+    </div>
+   </header><!-- ==================== ABOUT SECTION ==================== -->
+   <section id="about" class="reveal-section" style="padding:100px 24px;">
+    <div style="max-width:1000px;margin:0 auto;">
+     <div style="text-align:center;margin-bottom:60px;">
+      <p class="font-orbitron" style="color:var(--primary-color);font-size:12px;letter-spacing:4px;margin-bottom:12px;">◆ ABOUT ME</p>
+      <h2 class="font-orbitron neon-text" style="font-size:clamp(24px,4vw,40px);font-weight:800;">Who I Am</h2>
+     </div>
+     <div class="glass-card neon-border" style="padding:40px;display:flex;flex-wrap:wrap;gap:40px;align-items:center;"><!-- Robot illustration -->
+      <div style="flex:0 0 auto;display:flex;justify-content:center;">
+       <div class="robot-glow animate-float-slow">
+        <svg width="160" height="180" viewbox="0 0 160 180"><!-- Body --> <rect x="40" y="60" width="80" height="80" rx="16" fill="rgba(10,10,30,0.8)" stroke="#00d4ff" stroke-width="2" /> <!-- Head --> <rect x="48" y="20" width="64" height="45" rx="12" fill="rgba(10,10,30,0.8)" stroke="#a855f7" stroke-width="2" /> <!-- Eyes --> <circle cx="68" cy="42" r="6" fill="#00d4ff">
+          <animate attributename="opacity" values="1;0.2;1" dur="3s" repeatcount="indefinite" />
+         </circle> <circle cx="92" cy="42" r="6" fill="#00d4ff">
+          <animate attributename="opacity" values="1;0.2;1" dur="3s" begin="0.3s" repeatcount="indefinite" />
+         </circle> <!-- Mouth --> <path d="M70 55 Q80 62 90 55" stroke="#a855f7" stroke-width="2" fill="none" /> <!-- Arms --> <rect x="16" y="72" width="26" height="14" rx="7" fill="rgba(10,10,30,0.8)" stroke="#00d4ff" stroke-width="2" /> <rect x="118" y="72" width="26" height="14" rx="7" fill="rgba(10,10,30,0.8)" stroke="#00d4ff" stroke-width="2" /> <!-- Legs --> <rect x="55" y="140" width="16" height="28" rx="6" fill="rgba(10,10,30,0.8)" stroke="#a855f7" stroke-width="2" /> <rect x="89" y="140" width="16" height="28" rx="6" fill="rgba(10,10,30,0.8)" stroke="#a855f7" stroke-width="2" /> <!-- Antenna --> <line x1="80" y1="20" x2="80" y2="6" stroke="#00d4ff" stroke-width="2" /> <circle cx="80" cy="4" r="4" fill="#a855f7">
+          <animate attributename="r" values="4;6;4" dur="2s" repeatcount="indefinite" />
+         </circle> <!-- Chest panel --> <rect x="58" y="82" width="44" height="28" rx="6" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1" /> <circle cx="70" cy="96" r="4" fill="#00d4ff" opacity="0.6">
+          <animate attributename="opacity" values="0.3;0.8;0.3" dur="1.5s" repeatcount="indefinite" />
+         </circle> <circle cx="80" cy="96" r="4" fill="#a855f7" opacity="0.6">
+          <animate attributename="opacity" values="0.3;0.8;0.3" dur="1.5s" begin="0.5s" repeatcount="indefinite" />
+         </circle> <circle cx="90" cy="96" r="4" fill="#00d4ff" opacity="0.6">
+          <animate attributename="opacity" values="0.3;0.8;0.3" dur="1.5s" begin="1s" repeatcount="indefinite" />
+         </circle>
+        </svg>
+       </div>
+      </div><!-- About text -->
+      <div style="flex:1;min-width:250px;">
+       <h3 class="font-orbitron" style="font-size:22px;color:var(--primary-color);margin-bottom:16px;">Shreyansh Yadav</h3>
+       <p id="aboutText" style="font-size:16px;line-height:1.8;color:rgba(224,230,255,0.8);margin-bottom:20px;">I'm a passionate IT student dedicated to mastering the art of web development and modern technology. With a strong foundation in programming languages and a keen interest in AI-powered tools, I create innovative digital experiences that push boundaries. I believe in continuous learning and building real-world projects that make a difference.</p>
+       <div style="display:flex;flex-wrap:wrap;gap:10px;"><span class="font-orbitron" style="font-size:11px;padding:6px 14px;border-radius:20px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);color:var(--primary-color);">Web Development</span> <span class="font-orbitron" style="font-size:11px;padding:6px 14px;border-radius:20px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);color:var(--secondary-color);">AI Tools</span> <span class="font-orbitron" style="font-size:11px;padding:6px 14px;border-radius:20px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);color:var(--primary-color);">Programming</span> <span class="font-orbitron" style="font-size:11px;padding:6px 14px;border-radius:20px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);color:var(--secondary-color);">UI/UX Design</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider"></div><!-- ==================== SKILLS SECTION ==================== -->
+   <section id="skills" class="reveal-section" style="padding:100px 24px;">
+    <div style="max-width:1000px;margin:0 auto;">
+     <div style="text-align:center;margin-bottom:60px;">
+      <p class="font-orbitron" style="color:var(--secondary-color);font-size:12px;letter-spacing:4px;margin-bottom:12px;">◆ MY SKILLS</p>
+      <h2 class="font-orbitron neon-text" style="font-size:clamp(24px,4vw,40px);font-weight:800;">Tech Arsenal</h2>
+     </div><!-- Skills grid with bars -->
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;" id="skillsGrid">
+     </div>
+    </div>
+   </section>
+   <div class="section-divider"></div><!-- ==================== PROJECTS SECTION ==================== -->
+   <section id="projects" class="reveal-section" style="padding:100px 24px;">
+    <div style="max-width:1100px;margin:0 auto;">
+     <div style="text-align:center;margin-bottom:60px;">
+      <p class="font-orbitron" style="color:var(--primary-color);font-size:12px;letter-spacing:4px;margin-bottom:12px;">◆ MY WORK</p>
+      <h2 class="font-orbitron neon-text" style="font-size:clamp(24px,4vw,40px);font-weight:800;">Featured Projects</h2>
+     </div>
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;" id="projectsGrid">
+     </div>
+    </div>
+   </section>
+   <div class="section-divider"></div><!-- ==================== AI SKILLS SECTION ==================== -->
+   <section id="ai" class="reveal-section" style="padding:100px 24px;">
+    <div style="max-width:1000px;margin:0 auto;">
+     <div style="text-align:center;margin-bottom:60px;">
+      <p class="font-orbitron" style="color:var(--secondary-color);font-size:12px;letter-spacing:4px;margin-bottom:12px;">◆ AI POWERED</p>
+      <h2 class="font-orbitron neon-text" style="font-size:clamp(24px,4vw,40px);font-weight:800;">AI &amp; Automation</h2>
+     </div>
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;"><!-- AI Card 1 -->
+      <div class="glass-card neon-border" style="padding:32px;text-align:center;">
+       <div style="width:64px;height:64px;margin:0 auto 20px;border-radius:16px;background:linear-gradient(135deg,rgba(0,212,255,0.2),rgba(168,85,247,0.2));display:flex;align-items:center;justify-content:center;">
+        <svg width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
+         <path d="M12 2a4 4 0 0 1 4 4c0 1.1-.9 2-2 2h-4a2 2 0 0 1-2-2 4 4 0 0 1 4-4z" /><path d="M9 8v1a3 3 0 0 0 6 0V8" /><path d="M12 12v10" /><path d="M5 20a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3" />
+        </svg>
+       </div>
+       <h3 class="font-orbitron" style="font-size:16px;color:var(--primary-color);margin-bottom:12px;">AI Website Creation</h3>
+       <p style="font-size:14px;color:rgba(224,230,255,0.7);line-height:1.6;">Leveraging AI tools to rapidly prototype and build complete websites with intelligent layout suggestions and code generation.</p>
+      </div><!-- AI Card 2 -->
+      <div class="glass-card neon-border-purple" style="padding:32px;text-align:center;">
+       <div style="width:64px;height:64px;margin:0 auto 20px;border-radius:16px;background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(0,212,255,0.2));display:flex;align-items:center;justify-content:center;">
+        <svg width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
+         <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+        </svg>
+       </div>
+       <h3 class="font-orbitron" style="font-size:16px;color:var(--secondary-color);margin-bottom:12px;">Automation</h3>
+       <p style="font-size:14px;color:rgba(224,230,255,0.7);line-height:1.6;">Automating repetitive tasks with AI-powered scripts and tools, improving workflow efficiency and development speed.</p>
+      </div><!-- AI Card 3 -->
+      <div class="glass-card neon-border" style="padding:32px;text-align:center;">
+       <div style="width:64px;height:64px;margin:0 auto 20px;border-radius:16px;background:linear-gradient(135deg,rgba(0,212,255,0.2),rgba(168,85,247,0.2));display:flex;align-items:center;justify-content:center;">
+        <svg width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
+         <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M9 21V9" />
+        </svg>
+       </div>
+       <h3 class="font-orbitron" style="font-size:16px;color:var(--primary-color);margin-bottom:12px;">Smart Design</h3>
+       <p style="font-size:14px;color:rgba(224,230,255,0.7);line-height:1.6;">Using AI-assisted design tools for creating responsive, accessible, and visually compelling user interfaces and experiences.</p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider"></div><!-- ==================== CONTACT SECTION ==================== -->
+   <section id="contact" class="reveal-section" style="padding:100px 24px 60px;">
+    <div style="max-width:900px;margin:0 auto;">
+     <div style="text-align:center;margin-bottom:60px;">
+      <p class="font-orbitron" style="color:var(--primary-color);font-size:12px;letter-spacing:4px;margin-bottom:12px;">◆ GET IN TOUCH</p>
+      <h2 class="font-orbitron neon-text" style="font-size:clamp(24px,4vw,40px);font-weight:800;">Contact Me</h2>
+     </div>
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;"><!-- Contact info -->
+      <div>
+       <div class="glass-card neon-border" style="padding:32px;margin-bottom:24px;">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+         <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,212,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="mail" style="width:20px;height:20px;color:var(--primary-color);"></i>
+         </div>
+         <div>
+          <p style="font-size:12px;color:rgba(224,230,255,0.5);margin-bottom:2px;">Email</p>
+          <p id="contactEmail" style="font-size:14px;color:var(--text-color);word-break:break-all;">shreyanshyadav4112005@gmail.com</p>
+         </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+         <div style="width:44px;height:44px;border-radius:12px;background:rgba(168,85,247,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="phone" style="width:20px;height:20px;color:var(--secondary-color);"></i>
+         </div>
+         <div>
+          <p style="font-size:12px;color:rgba(224,230,255,0.5);margin-bottom:2px;">Phone</p>
+          <p id="contactPhone" style="font-size:14px;color:var(--text-color);">6203262364</p>
+         </div>
+        </div>
+       </div><!-- Social links -->
+       <div style="display:flex;gap:12px;justify-content:center;"><a href="https://github.com/yadavshreyansh4112005-dev" target="_blank" rel="noopener noreferrer" style="width:48px;height:48px;border-radius:12px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);display:flex;align-items:center;justify-content:center;transition:all 0.3s;color:var(--primary-color);text-decoration:none;" onmouseenter="this.style.boxShadow='0 0 20px rgba(0,212,255,0.4)';this.style.transform='translateY(-3px)'" onmouseleave="this.style.boxShadow='none';this.style.transform='translateY(0)'"> <i data-lucide="github" style="width:22px;height:22px;"></i> </a> <a href="https://www.linkedin.com/in/shreyansh-yadav-49ba63252" target="_blank" rel="noopener noreferrer" style="width:48px;height:48px;border-radius:12px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center;transition:all 0.3s;color:var(--secondary-color);text-decoration:none;" onmouseenter="this.style.boxShadow='0 0 20px rgba(168,85,247,0.4)';this.style.transform='translateY(-3px)'" onmouseleave="this.style.boxShadow='none';this.style.transform='translateY(0)'"> <i data-lucide="linkedin" style="width:22px;height:22px;"></i> </a> <a href="https://www.instagram.com/sh.reyansh6281" target="_blank" rel="noopener noreferrer" style="width:48px;height:48px;border-radius:12px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);display:flex;align-items:center;justify-content:center;transition:all 0.3s;color:var(--primary-color);text-decoration:none;" onmouseenter="this.style.boxShadow='0 0 20px rgba(0,212,255,0.4)';this.style.transform='translateY(-3px)'" onmouseleave="this.style.boxShadow='none';this.style.transform='translateY(0)'"> <i data-lucide="instagram" style="width:22px;height:22px;"></i> </a>
+       </div>
+      </div><!-- Contact form -->
+      <div>
+       <form id="contactForm" class="glass-card neon-border-purple" style="padding:32px;">
+        <div style="margin-bottom:16px;"><label for="nameInput" style="font-size:13px;color:rgba(224,230,255,0.6);margin-bottom:6px;display:block;font-weight:500;">Your Name</label> <input type="text" id="nameInput" class="form-input" placeholder="Enter your name" required>
+        </div>
+        <div style="margin-bottom:16px;"><label for="emailInput" style="font-size:13px;color:rgba(224,230,255,0.6);margin-bottom:6px;display:block;font-weight:500;">Your Email</label> <input type="email" id="emailInput" class="form-input" placeholder="your@email.com" required>
+        </div>
+        <div style="margin-bottom:20px;"><label for="messageInput" style="font-size:13px;color:rgba(224,230,255,0.6);margin-bottom:6px;display:block;font-weight:500;">Message</label> <textarea id="messageInput" class="form-input" rows="4" placeholder="Write your message..." style="resize:vertical;" required></textarea>
+        </div><button type="submit" class="btn-primary font-orbitron" style="width:100%;border:none;cursor:pointer;font-size:13px;color:#0a0a1a;"> <span style="display:flex;align-items:center;justify-content:center;gap:8px;">SEND MESSAGE <i data-lucide="send" style="width:16px;height:16px;"></i></span> </button>
+        <div id="formMsg" style="display:none;margin-top:12px;text-align:center;font-size:14px;padding:10px;border-radius:8px;"></div>
+       </form>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer style="padding:40px 24px;text-align:center;border-top:1px solid rgba(0,212,255,0.1);">
+    <p class="font-orbitron" style="font-size:12px;color:rgba(224,230,255,0.4);">© 2025 Shreyansh Yadav. Built with passion &amp; code.</p>
+   </footer>
+  </div><!-- end app-wrapper --> <!-- Chatbot -->
+  <div class="chatbot-container">
+   <div class="chatbot-panel" id="chatPanel">
+    <div style="padding:16px;border-bottom:1px solid rgba(0,212,255,0.2);display:flex;align-items:center;justify-content:space-between;">
+     <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary-color),var(--secondary-color));display:flex;align-items:center;justify-content:center;">
+       <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="#0a0a1a" stroke-width="2.5">
+        <path d="M12 2a4 4 0 0 1 4 4c0 1.1-.9 2-2 2h-4a2 2 0 0 1-2-2 4 4 0 0 1 4-4z" /><path d="M12 12v10" />
+       </svg>
+      </div>
+      <div>
+       <p class="font-orbitron" style="font-size:12px;font-weight:700;color:var(--primary-color);">SY Bot</p>
+       <p style="font-size:10px;color:rgba(224,230,255,0.5);">Online</p>
+      </div>
+     </div><button id="closeChatBtn" style="background:none;border:none;color:rgba(224,230,255,0.5);cursor:pointer;padding:4px;"> <i data-lucide="x" style="width:18px;height:18px;"></i> </button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+     <div class="chat-msg bot">
+      <div class="chat-bubble bot-bubble">
+       👋 Hi! I'm Shreyansh's AI assistant. Ask me about his skills, projects, or how to get in touch!
+      </div>
+     </div>
+    </div>
+    <div style="padding:12px;border-top:1px solid rgba(0,212,255,0.2);display:flex;gap:8px;"><label for="chatInput" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Chat message</label> <input type="text" id="chatInput" class="form-input" placeholder="Ask me anything..." style="flex:1;padding:10px 14px;font-size:13px;"> <button id="chatSendBtn" style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--primary-color),var(--secondary-color));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;"> <i data-lucide="send" style="width:16px;height:16px;color:#0a0a1a;"></i> </button>
+    </div>
+   </div><button class="chatbot-btn" id="chatToggle" aria-label="Toggle chatbot"> <i data-lucide="message-circle" style="width:24px;height:24px;"></i> </button>
+  </div>
+  <script>
+// ============ CONFIG & SDK ============
+const defaultConfig = {
+  background_color: '#0a0a1a',
+  surface_color: 'rgba(15, 15, 40, 0.6)',
+  text_color: '#e0e6ff',
+  primary_color: '#00d4ff',
+  secondary_color: '#a855f7',
+  font_family: 'Rajdhani',
+  font_size: 16,
+  hero_title: "Hi, I'm Shreyansh",
+  hero_subtitle: "I build modern websites using AI and advanced web technologies. Turning creative ideas into interactive digital experiences.",
+  about_text: "I'm a passionate IT student dedicated to mastering the art of web development and modern technology. With a strong foundation in programming languages and a keen interest in AI-powered tools, I create innovative digital experiences that push boundaries. I believe in continuous learning and building real-world projects that make a difference.",
+  contact_email: "shreyanshyadav4112005@gmail.com",
+  contact_phone: "6203262364"
+};
+
+function applyConfig(cfg) {
+  // Colors
+  document.documentElement.style.setProperty('--bg-color', cfg.background_color || defaultConfig.background_color);
+  document.documentElement.style.setProperty('--surface-color', cfg.surface_color || defaultConfig.surface_color);
+  document.documentElement.style.setProperty('--text-color', cfg.text_color || defaultConfig.text_color);
+  document.documentElement.style.setProperty('--primary-color', cfg.primary_color || defaultConfig.primary_color);
+  document.documentElement.style.setProperty('--secondary-color', cfg.secondary_color || defaultConfig.secondary_color);
+
+  // Font
+  const font = cfg.font_family || defaultConfig.font_family;
+  const baseSize = cfg.font_size || defaultConfig.font_size;
+  document.body.style.fontFamily = `${font}, Rajdhani, sans-serif`;
+  document.body.style.fontSize = `${baseSize}px`;
+
+  // Text content
+  const heroEl = document.getElementById('heroTitle');
+  if (heroEl) {
+    const title = cfg.hero_title || defaultConfig.hero_title;
+    heroEl.innerHTML = `${title}<br><span style="color:var(--secondary-color);">IT Student</span> &<br><span style="color:var(--primary-color);">Web Developer</span>`;
+  }
+  const subtitleEl = document.getElementById('heroSubtitle');
+  if (subtitleEl) subtitleEl.textContent = cfg.hero_subtitle || defaultConfig.hero_subtitle;
+  const aboutEl = document.getElementById('aboutText');
+  if (aboutEl) aboutEl.textContent = cfg.about_text || defaultConfig.about_text;
+  const emailEl = document.getElementById('contactEmail');
+  if (emailEl) emailEl.textContent = cfg.contact_email || defaultConfig.contact_email;
+  const phoneEl = document.getElementById('contactPhone');
+  if (phoneEl) phoneEl.textContent = cfg.contact_phone || defaultConfig.contact_phone;
+}
+
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (config) => { applyConfig(config); },
+  mapToCapabilities: (config) => ({
+    recolorables: [
+      { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+      { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+      { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+      { get: () => config.primary_color || defaultConfig.primary_color, set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+      { get: () => config.secondary_color || defaultConfig.secondary_color, set: (v) => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
+    ],
+    borderables: [],
+    fontEditable: {
+      get: () => config.font_family || defaultConfig.font_family,
+      set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+    },
+    fontSizeable: {
+      get: () => config.font_size || defaultConfig.font_size,
+      set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+    }
+  }),
+  mapToEditPanelValues: (config) => new Map([
+    ['hero_title', config.hero_title || defaultConfig.hero_title],
+    ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
+    ['about_text', config.about_text || defaultConfig.about_text],
+    ['contact_email', config.contact_email || defaultConfig.contact_email],
+    ['contact_phone', config.contact_phone || defaultConfig.contact_phone]
+  ])
+});
+
+// ============ CUSTOM CURSOR ============
+const cursor = document.getElementById('cursor');
+let isMobile = 'ontouchstart' in window;
+if (!isMobile) {
+  cursor.style.display = 'block';
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX - 10 + 'px';
+    cursor.style.top = e.clientY - 10 + 'px';
+  });
+  document.querySelectorAll('a, button, input, textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+}
+
+// ============ PARTICLES ============
+const particlesEl = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.top = Math.random() * 100 + '%';
+  p.style.animationDelay = Math.random() * 5 + 's';
+  p.style.animationDuration = (3 + Math.random() * 4) + 's';
+  p.style.background = Math.random() > 0.5 ? 'var(--primary-color)' : 'var(--secondary-color)';
+  p.style.opacity = 0.15 + Math.random() * 0.25;
+  p.style.width = (2 + Math.random() * 3) + 'px';
+  p.style.height = p.style.width;
+  particlesEl.appendChild(p);
+}
+
+// ============ CODE ANIMATION ============
+const codeLines = [
+  { text: '&lt;!DOCTYPE html&gt;', color: '#a855f7' },
+  { text: '&lt;html lang="en"&gt;', color: '#a855f7' },
+  { text: '  &lt;head&gt;', color: '#a855f7' },
+  { text: '    &lt;title&gt;Portfolio&lt;/title&gt;', color: '#00d4ff' },
+  { text: '    &lt;link rel="stylesheet"&gt;', color: '#00d4ff' },
+  { text: '  &lt;/head&gt;', color: '#a855f7' },
+  { text: '  &lt;body&gt;', color: '#a855f7' },
+  { text: '    const dev = {', color: '#febc2e' },
+  { text: '      name: "Shreyansh",', color: '#28c840' },
+  { text: '      role: "Web Developer",', color: '#28c840' },
+  { text: '      skills: ["HTML","CSS",', color: '#28c840' },
+  { text: '        "JS","Python","AI"],', color: '#28c840' },
+  { text: '      passion: "∞"', color: '#ff5f57' },
+  { text: '    };', color: '#febc2e' },
+  { text: '    dev.build("amazing");', color: '#00d4ff' },
+  { text: '  &lt;/body&gt;', color: '#a855f7' },
+  { text: '&lt;/html&gt;', color: '#a855f7' },
+];
+
+const codeDisplay = document.getElementById('codeDisplay');
+let codeIdx = 0;
+function addCodeLine() {
+  if (codeIdx >= codeLines.length) {
+    codeDisplay.innerHTML = '';
+    codeIdx = 0;
+  }
+  const line = codeLines[codeIdx];
+  const div = document.createElement('div');
+  div.className = 'code-line';
+  div.innerHTML = `<span style="color:rgba(224,230,255,0.3);margin-right:8px;">${String(codeIdx+1).padStart(2,'0')}</span><span style="color:${line.color};">${line.text}</span>`;
+  div.style.animationDelay = '0s';
+  codeDisplay.appendChild(div);
+  codeIdx++;
+  // Keep only last 12 lines visible
+  while (codeDisplay.children.length > 12) codeDisplay.removeChild(codeDisplay.firstChild);
+}
+setInterval(addCodeLine, 600);
+addCodeLine();
+
+// ============ SKILLS ============
+const skills = [
+  { name: 'HTML', pct: 65, icon: '&lt;/&gt;', color: 'var(--primary-color)' },
+  { name: 'CSS', pct: 55, icon: '🎨', color: 'var(--secondary-color)' },
+  { name: 'JavaScript', pct: 45, icon: '⚡', color: 'var(--primary-color)' },
+  { name: 'Python', pct: 40, icon: '🐍', color: 'var(--secondary-color)' },
+  { name: 'Java', pct: 35, icon: '☕', color: 'var(--primary-color)' },
+  { name: 'C++', pct: 30, icon: '⚙️', color: 'var(--secondary-color)' },
+  { name: 'AI Tools', pct: 60, icon: '🤖', color: 'var(--primary-color)' },
+  { name: 'UI/UX', pct: 50, icon: '✨', color: 'var(--secondary-color)' },
+];
+
+const skillsGrid = document.getElementById('skillsGrid');
+skills.forEach(skill => {
+  const card = document.createElement('div');
+  card.className = 'glass-card';
+  card.style.padding = '24px';
+  const offset = 226 - (226 * skill.pct / 100);
+  card.innerHTML = `
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
+      <div class="circular-progress">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle class="bg-ring" cx="40" cy="40" r="36"/>
+          <circle class="progress-ring" cx="40" cy="40" r="36" style="stroke-dashoffset:${offset};" data-offset="${offset}"/>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <span class="font-orbitron" style="font-size:14px;font-weight:700;color:${skill.color};">${skill.pct}%</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:20px;margin-bottom:2px;">${skill.icon}</div>
+        <h4 class="font-orbitron" style="font-size:15px;color:${skill.color};">${skill.name}</h4>
+      </div>
+    </div>
+    <div class="skill-bar-track">
+      <div class="skill-bar-fill" style="--target-width:${skill.pct}%;"></div>
+    </div>
+  `;
+  skillsGrid.appendChild(card);
+});
+
+// ============ PROJECTS ============
+const projects = [
+  { title: 'School Website', desc: 'A comprehensive school website with class schedules, events, and student portal built with modern web technologies.', tags: ['HTML', 'CSS', 'JavaScript'], accent: 'var(--primary-color)' },
+  { title: 'AI Website Assistant', desc: 'An intelligent chatbot assistant integrated into websites for automated customer support and navigation.', tags: ['Python', 'AI', 'JavaScript'], accent: 'var(--secondary-color)' },
+  { title: 'Online Electrical Shop', desc: 'Full e-commerce platform for electrical products with cart, categories, and responsive product catalog.', tags: ['HTML', 'CSS', 'JS', 'UI/UX'], accent: 'var(--primary-color)' },
+];
+
+const projectsGrid = document.getElementById('projectsGrid');
+projects.forEach(proj => {
+  const card = document.createElement('div');
+  card.className = 'glass-card project-card';
+  card.style.padding = '0';
+  card.style.overflow = 'hidden';
+  card.innerHTML = `
+    <div style="height:180px;background:linear-gradient(135deg,${proj.accent === 'var(--primary-color)' ? 'rgba(0,212,255,0.15)' : 'rgba(168,85,247,0.15)'},rgba(10,10,30,0.8));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:20px 20px;"></div>
+      <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="${proj.accent === 'var(--primary-color)' ? '#00d4ff' : '#a855f7'}" stroke-width="1.5" style="opacity:0.6;">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+    </div>
+    <div style="padding:24px;">
+      <h3 class="font-orbitron" style="font-size:18px;color:${proj.accent === 'var(--primary-color)' ? '#00d4ff' : '#a855f7'};margin-bottom:10px;">${proj.title}</h3>
+      <p style="font-size:14px;color:rgba(224,230,255,0.7);line-height:1.6;margin-bottom:16px;">${proj.desc}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        ${proj.tags.map(t => `<span style="font-size:11px;padding:4px 10px;border-radius:12px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);color:var(--primary-color);font-family:'Orbitron',monospace;">${t}</span>`).join('')}
+      </div>
+    </div>
+  `;
+  projectsGrid.appendChild(card);
+});
+
+// ============ SCROLL REVEAL ============
+const revealSections = document.querySelectorAll('.reveal-section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Animate skill bars within
+      entry.target.querySelectorAll('.skill-bar-fill').forEach((bar, i) => {
+        setTimeout(() => bar.classList.add('animated'), i * 100);
+      });
+    }
+  });
+}, { threshold: 0.15 });
+revealSections.forEach(s => observer.observe(s));
+
+// ============ NAV SCROLL EFFECT ============
+const mainNav = document.getElementById('mainNav');
+const appWrapper = document.getElementById('app-wrapper');
+appWrapper.addEventListener('scroll', () => {
+  if (appWrapper.scrollTop > 50) {
+    mainNav.style.background = 'rgba(10, 10, 26, 0.95)';
+    mainNav.style.backdropFilter = 'blur(20px)';
+    mainNav.style.borderBottom = '1px solid rgba(0,212,255,0.1)';
+  } else {
+    mainNav.style.background = 'transparent';
+    mainNav.style.backdropFilter = 'none';
+    mainNav.style.borderBottom = 'none';
+  }
+});
+
+// ============ MOBILE MENU ============
+const mobileMenu = document.getElementById('mobileMenu');
+document.getElementById('menuBtn').addEventListener('click', () => mobileMenu.classList.add('open'));
+document.getElementById('closeMenuBtn').addEventListener('click', () => mobileMenu.classList.remove('open'));
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+  link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+// ============ SMOOTH SCROLL ============
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ============ CONTACT FORM ============
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const msg = document.getElementById('formMsg');
+  msg.style.display = 'block';
+  msg.style.background = 'rgba(0,212,255,0.1)';
+  msg.style.border = '1px solid rgba(0,212,255,0.3)';
+  msg.style.color = 'var(--primary-color)';
+  msg.textContent = '✨ Message sent successfully! I\'ll get back to you soon.';
+  this.reset();
+  setTimeout(() => { msg.style.display = 'none'; }, 4000);
+});
+
+// ============ CHATBOT ============
+const chatPanel = document.getElementById('chatPanel');
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+
+document.getElementById('chatToggle').addEventListener('click', () => chatPanel.classList.toggle('open'));
+document.getElementById('closeChatBtn').addEventListener('click', () => chatPanel.classList.remove('open'));
+
+const botResponses = {
+  skills: "Shreyansh is skilled in HTML, CSS, JavaScript, Python, Java, C++, AI Tools, and UI/UX Design. He's constantly learning and growing! 🚀",
+  projects: "He's built a School Website, an AI Website Assistant, and an Online Electrical Shop. Each project showcases different skills! 💻",
+  contact: "You can reach Shreyansh at shreyanshyadav4112005@gmail.com or call 6203262364. Check out the contact section below! 📧",
+  about: "Shreyansh is a passionate IT student who builds modern websites using AI and advanced web technologies. He loves coding and creating innovative digital experiences! ✨",
+  ai: "Shreyansh uses AI tools for website creation, automation, and smart design. He believes AI is the future of web development! 🤖",
+  hello: "Hey there! 👋 I'm Shreyansh's AI assistant. Ask me about his skills, projects, or how to reach him!",
+  default: "That's interesting! I can tell you about Shreyansh's skills, projects, AI expertise, or contact info. What would you like to know? 🤔"
+};
+
+function addChatMsg(text, isUser) {
+  const div = document.createElement('div');
+  div.className = `chat-msg ${isUser ? 'user' : 'bot'}`;
+  div.innerHTML = `<div class="chat-bubble ${isUser ? 'user-bubble' : 'bot-bubble'}">${text}</div>`;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function getBotResponse(input) {
+  const lower = input.toLowerCase();
+  if (lower.includes('skill') || lower.includes('tech') || lower.includes('know')) return botResponses.skills;
+  if (lower.includes('project') || lower.includes('work') || lower.includes('built')) return botResponses.projects;
+  if (lower.includes('contact') || lower.includes('email') || lower.includes('phone') || lower.includes('reach')) return botResponses.contact;
+  if (lower.includes('about') || lower.includes('who') || lower.includes('shreyansh')) return botResponses.about;
+  if (lower.includes('ai') || lower.includes('artificial') || lower.includes('automat')) return botResponses.ai;
+  if (lower.includes('hi') || lower.includes('hello') || lower.includes('hey')) return botResponses.hello;
+  return botResponses.default;
+}
+
+function sendChat() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  addChatMsg(text, true);
+  chatInput.value = '';
+  setTimeout(() => addChatMsg(getBotResponse(text), false), 600);
+}
+
+document.getElementById('chatSendBtn').addEventListener('click', sendChat);
+chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendChat(); } });
+
+// ============ INIT LUCIDE ============
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc33deaa6c047da',t:'MTc3MzQ5MDkyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
